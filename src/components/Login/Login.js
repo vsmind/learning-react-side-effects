@@ -1,8 +1,9 @@
-import React, { useReducer, useState, useEffect } from 'react';
+import React, { useReducer, useState, useEffect, useContext } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
+import AuthContext from "../../store/auth-context";
 
 // reducer can be created outside the component scope
 const emailReducer = (state, action) => {
@@ -36,6 +37,8 @@ const Login = (props) => {
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, { value: '', isValid: null });
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, { value: '', isValid: null });
+
+  const authContext = useContext(AuthContext);
 
   // Object destructure
   // get value of isValid field from the object and save it to another value (alias assigment)
@@ -92,7 +95,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    authContext.onLogin(emailState.value, passwordState.value);
   };
 
   return (
